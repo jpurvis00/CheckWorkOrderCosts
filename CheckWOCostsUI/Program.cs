@@ -30,7 +30,7 @@ internal class Program
 
             var subContractingDetails = oracleConnection.GetSubContractingDetails(wo.Work_Order_No);
             var subContractingCost = SubContractingDetails.GetSubContractingDetails(subContractingDetails);
-            Console.WriteLine($"sub cost: {subContractingCost}");
+            Console.WriteLine($"sub cost for parent part: {subContractingCost}");
 
             var workOrderCompletionDetails = oracleConnection.GetWorkOrderCompletionDetails(wo.Work_Order_No).FirstOrDefault();
 

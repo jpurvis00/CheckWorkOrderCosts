@@ -47,7 +47,7 @@ namespace CheckWOCostsLibrary
         {
             var subContractCost = actualIssuedSubContractCost + subContractingCost;
 
-            if(subContractCost != Math.Abs(workOrderCompletionModel.Total_Sc_Cost))
+            if (subContractCost != Math.Round(Math.Abs(workOrderCompletionModel.Total_Sc_Cost), 4))
             {
                 DisplayErrorMessage.DisplayMessage("Subcontracting costs do not match.  Please fix and rerun.");
             }
