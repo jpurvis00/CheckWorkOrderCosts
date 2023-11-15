@@ -13,9 +13,9 @@ namespace DataAccessLibrary
             _connectionString = connectionString;
         }
 
-        public List<ClosedWorkOrderModel> GetClosedWorkOrders()
+        public List<ClosedWorkOrderModel> GetClosedWorkOrders(int dayToCheck)
         {
-            string sql = "select * from z_closed_jobs_nightly where close_date = TRUNC(SYSDATE - 1)";
+            string sql = $"select * from z_closed_jobs_nightly where close_date = TRUNC(SYSDATE - {dayToCheck})";
 
             return _db.LoadData<ClosedWorkOrderModel, dynamic>(sql, new { }, _connectionString);
         }

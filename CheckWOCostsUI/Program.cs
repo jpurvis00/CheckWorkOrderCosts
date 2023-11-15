@@ -9,7 +9,8 @@ internal class Program
     {
         OracleCrud oracleConnection = new OracleCrud(Configuration.GetConnectionString());
 
-        var closedWorkOrders = oracleConnection.GetClosedWorkOrders();
+        var dayToCheck = GetDayToCheckClosedWorkOrders.GetDayToCheck();
+        var closedWorkOrders = oracleConnection.GetClosedWorkOrders(dayToCheck);
         
         foreach (var wo in closedWorkOrders)
         {
