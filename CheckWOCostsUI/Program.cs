@@ -43,10 +43,10 @@ internal class Program
 
             CheckIfValuesMatch.CheckSubContractCostsMatch(actualIssuedSubContractCost, subContractingCost, workOrderCompletionDetails);
 
-            Console.WriteLine("**********************************\n");
+            Console.WriteLine("**********************\n");
         }
 
-        Console.WriteLine("Finished processing.");
+        Console.WriteLine("Finished processing work orders.");
         Console.ReadLine();
     }
 }

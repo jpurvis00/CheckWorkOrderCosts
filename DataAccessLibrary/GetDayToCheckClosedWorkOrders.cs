@@ -20,6 +20,7 @@ namespace DataAccessLibrary
 
                 if (isValidInt == true && day > 0)
                 {
+                    Console.WriteLine();
                     return day;
                 }
                 else
