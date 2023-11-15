@@ -11,7 +11,12 @@ internal class Program
 
         var dayToCheck = GetDayToCheckClosedWorkOrders.GetDayToCheck();
         var closedWorkOrders = oracleConnection.GetClosedWorkOrders(dayToCheck);
-        
+
+        var currentDateTime = DateTime.Now;
+        var date = DateOnly.FromDateTime(currentDateTime);
+
+        Console.WriteLine(date.AddDays(-dayToCheck));
+
         foreach (var wo in closedWorkOrders)
         {
             /* test with wo 905778 for subcontract, scrap, ops with no labor */
