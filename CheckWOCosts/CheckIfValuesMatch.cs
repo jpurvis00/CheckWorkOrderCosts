@@ -13,7 +13,7 @@ namespace CheckWOCostsLibrary
         {
             var laborCost = actualIssuedLaborCost + timeCardLaborCost;
             
-            var costDifference = Math.Abs(workOrderCompletionModel.Total_Labor_Cost) - laborCost;
+            var costDifference = Math.Round(Math.Abs(workOrderCompletionModel.Total_Labor_Cost), 4) - laborCost;
 
             /* Giving a .50 cost difference threshold for rounding errors. */
             if(Math.Abs(costDifference) > .5M)
@@ -25,8 +25,8 @@ namespace CheckWOCostsLibrary
 
         public static void CheckMaterialCostsMatch(decimal actualMaterialCost, decimal actualIssuedMaterialCost, WorkOrderCompletionModel? workOrderCompletionModel)
         {
-            if(Math.Abs(workOrderCompletionModel.Total_Mat_Cost) != actualMaterialCost || 
-               Math.Abs(workOrderCompletionModel.Total_Mat_Cost) != actualIssuedMaterialCost)
+            if(Math.Round(Math.Abs(workOrderCompletionModel.Total_Mat_Cost), 4) != actualMaterialCost || 
+               Math.Round(Math.Abs(workOrderCompletionModel.Total_Mat_Cost), 4) != actualIssuedMaterialCost)
             {
                 DisplayErrorMessage.DisplayMessage("Material costs do not match.  Please fix and rerun.\n" +
                     $"actualMaterialCost: {actualMaterialCost}  actualIssuedMaterialCost: {actualIssuedMaterialCost}    workOrderComletionMode.Total_Mat_Cost: {workOrderCompletionModel.Total_Mat_Cost}");
@@ -37,7 +37,7 @@ namespace CheckWOCostsLibrary
         {
             var ohCost = actualIssuedOHCost + timeCardOHCost;
 
-            var costDifference = Math.Abs(workOrderCompletionModel.Total_Foh_Cost) - ohCost;
+            var costDifference = Math.Round(Math.Abs(workOrderCompletionModel.Total_Foh_Cost), 4) - ohCost;
 
             if(Math.Abs(costDifference) > .5M)
             {
