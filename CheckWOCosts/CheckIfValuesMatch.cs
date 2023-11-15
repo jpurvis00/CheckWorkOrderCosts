@@ -18,7 +18,8 @@ namespace CheckWOCostsLibrary
             /* Giving a .50 cost difference threshold for rounding errors. */
             if(Math.Abs(costDifference) > .5M)
             {
-                DisplayErrorMessage.DisplayMessage("Labor costs do not match.  Please fix and rerun.");
+                DisplayErrorMessage.DisplayMessage("Labor costs do not match.  Please fix and rerun.\n" +
+                    $"laborCost: {laborCost}    workOrderCompletionModel.Total_Labor_Cost: {workOrderCompletionModel.Total_Labor_Cost}");
             }
         }
 
@@ -27,7 +28,8 @@ namespace CheckWOCostsLibrary
             if(Math.Abs(workOrderCompletionModel.Total_Mat_Cost) != actualMaterialCost || 
                Math.Abs(workOrderCompletionModel.Total_Mat_Cost) != actualIssuedMaterialCost)
             {
-                DisplayErrorMessage.DisplayMessage("Material costs do not match.  Please fix and rerun.");
+                DisplayErrorMessage.DisplayMessage("Material costs do not match.  Please fix and rerun.\n" +
+                    $"actualMaterialCost: {actualMaterialCost}  actualIssuedMaterialCost: {actualIssuedMaterialCost}    workOrderComletionMode.Total_Mat_Cost: {workOrderCompletionModel.Total_Mat_Cost}");
             }
         }
 
@@ -39,7 +41,8 @@ namespace CheckWOCostsLibrary
 
             if(Math.Abs(costDifference) > .5M)
             {
-                DisplayErrorMessage.DisplayMessage("OH costs do not match.  Please fix and rerun.");
+                DisplayErrorMessage.DisplayMessage("OH costs do not match.  Please fix and rerun.\n" +
+                    $"ohCost: {ohCost}  workOrderCompletionModel.Total_Foh_Cost: {workOrderCompletionModel.Total_Foh_Cost}");
             }
         }
 
@@ -49,7 +52,8 @@ namespace CheckWOCostsLibrary
 
             if (subContractCost != Math.Round(Math.Abs(workOrderCompletionModel.Total_Sc_Cost), 4))
             {
-                DisplayErrorMessage.DisplayMessage("Subcontracting costs do not match.  Please fix and rerun.");
+                DisplayErrorMessage.DisplayMessage("Subcontracting costs do not match.  Please fix and rerun.\n" +
+                    $"subContractCost: {subContractCost}    workOrderCompletionModel.Total_Sc_cost: {workOrderCompletionModel.Total_Sc_Cost}");
             }
         }
     }
