@@ -19,26 +19,33 @@ internal class Program
 
         foreach (var wo in closedWorkOrders)
         {
-            /* test with wo 905778 for subcontract, scrap, ops with no labor */
-
             Console.WriteLine($"***** WO: {wo.Work_Order_No} *****");
 
+            //string testingOrderNumb = "906156";
+
+            //var costSummaryDetails = oracleConnection.GetCostSummaryActualMaterialCost(testingOrderNumb);
             var costSummaryDetails = oracleConnection.GetCostSummaryActualMaterialCost(wo.Work_Order_No);
             var actualMaterialCost = CostSummaryActualMaterialCost.GetCostSummaryActualMaterialCost(costSummaryDetails);
 
+            //var woIssuesWCostDetails = oracleConnection.GetWOIssuesWithCost(testingOrderNumb);
             var woIssuesWCostDetails = oracleConnection.GetWOIssuesWithCost(wo.Work_Order_No);
             var (actualIssuedMaterialCost, actualIssuedLaborCost, actualIssuedOHCost, actualIssuedSubContractCost) = WorkOrderIssuesWithCost.GetWorkOrderIssuesWithCostDetails(woIssuesWCostDetails);
             Console.WriteLine($"mat cost: {actualIssuedMaterialCost}    labor cost: {actualIssuedLaborCost}     oh cost: {actualIssuedOHCost}   sub cost: {actualIssuedSubContractCost}");
 
-            var timeCardDetails = oracleConnection.GetTimeCardDetails(wo.Work_Order_No);
-            var (timeCardLaborCost, timeCardOHCost) = TimeCardDetails.GetTimeCardDetails(timeCardDetails);
+            //var timeCardDetailsWithSetupTeardown = oracleConnection.GetTimeCardDetailsWithSetupTeardown(testingOrderNumb);
+            var timeCardDetailsWithSetupTeardown = oracleConnection.GetTimeCardDetailsWithSetupTeardown(wo.Work_Order_No);
+            var (timeCardLaborCost, timeCardOHCost) = TimeCardDetails.GetTimeCardDetails(timeCardDetailsWithSetupTeardown);
             Console.WriteLine($"labor cost: {timeCardLaborCost}     oh cost: {timeCardOHCost}");
 
+            //var subContractingDetails = oracleConnection.GetSubContractingDetails(testingOrderNumb);
             var subContractingDetails = oracleConnection.GetSubContractingDetails(wo.Work_Order_No);
             var subContractingCost = SubContractingDetails.GetSubContractingDetails(subContractingDetails);
             Console.WriteLine($"sub cost for parent part: {subContractingCost}");
 
-            var workOrderCompletionDetails = oracleConnection.GetWorkOrderCompletionDetails(wo.Work_Order_No).FirstOrDefault();
+            //var workOrderCompletionDetails = oracleConnection.GetWorkOrderCompletionDetails(testingOrderNumb);
+            var workOrderCompletionDetails = oracleConnection.GetWorkOrderCompletionDetails(wo.Work_Order_No);
+
+            var issuedMaterialCostsVsItemStandardCosts = oracleConnection.GetIssuedMaterialCostsVsItemStandardCosts(wo.Work_Order_No);
 
             CheckIfValuesMatch.CheckMaterialCostsMatch(actualMaterialCost, actualIssuedMaterialCost, workOrderCompletionDetails);
 
@@ -47,6 +54,8 @@ internal class Program
             CheckIfValuesMatch.CheckOHCostsMatch(actualIssuedOHCost, timeCardOHCost, workOrderCompletionDetails);
 
             CheckIfValuesMatch.CheckSubContractCostsMatch(actualIssuedSubContractCost, subContractingCost, workOrderCompletionDetails);
+
+            CheckIfValuesMatch.CheckIssuedMaterialCostsVsItemStandardCosts(issuedMaterialCostsVsItemStandardCosts);
 
             Console.WriteLine("**********************\n");
         }
